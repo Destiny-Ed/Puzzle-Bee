@@ -76,6 +76,7 @@ class _GamePlayStopButtonState extends State<GamePlayStopButton>
         Color.alphaBlend(backgroundColorAccent, backgroundColorCard);
 
     return FloatingActionButton.extended(
+      heroTag: 'action',
       backgroundColor: backgroundColor,
       tooltip: widget.isPlaying ? "Stop" : "Play",
       onPressed: () => widget.onTap?.call(),

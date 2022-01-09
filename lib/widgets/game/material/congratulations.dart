@@ -26,6 +26,7 @@ class GameVictoryDialog extends StatelessWidget {
               "with just ${result.steps} moves... Challenge me! $APP_URL");
         },
         child: Container(
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             border: Border.all(color: Colors.blue),
@@ -34,11 +35,15 @@ class GameVictoryDialog extends StatelessWidget {
           child: const Text("Post"),
         ),
       ),
+      const SizedBox(
+        height: 10,
+      ),
       GestureDetector(
         onTap: () {
           Navigator.of(context).pop();
         },
         child: Container(
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: Colors.blue,
@@ -54,13 +59,17 @@ class GameVictoryDialog extends StatelessWidget {
         //   "Congratulations!",
         //   style: Theme.of(context).textTheme.headline5,
         // ),
-        child: Image.asset('artwork/congrat.png', width: 100),
+        child: Image.asset(
+          'artwork/congrat.png',
+        ),
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Text(
-              "You've successfuly completed the ${result.size}x${result.size} puzzle"),
+            "You've completed the ${result.size}x${result.size} puzzle successfully",
+            textAlign: TextAlign.center,
+          ),
           const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -70,11 +79,11 @@ class GameVictoryDialog extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Text(
-                    'Time:',
+                    'Moves:',
                     style: Theme.of(context).textTheme.caption,
                   ),
                   Text(
-                    timeFormatted,
+                    '${result.steps}',
                     style: Theme.of(context).textTheme.headline3!.copyWith(
                           color: Theme.of(context).textTheme.bodyText1!.color,
                         ),
@@ -86,11 +95,11 @@ class GameVictoryDialog extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Text(
-                    'Moves:',
+                    'Time:',
                     style: Theme.of(context).textTheme.caption,
                   ),
                   Text(
-                    '${result.steps}',
+                    timeFormatted,
                     style: Theme.of(context).textTheme.headline3!.copyWith(
                           color: Theme.of(context).textTheme.bodyText1!.color,
                         ),

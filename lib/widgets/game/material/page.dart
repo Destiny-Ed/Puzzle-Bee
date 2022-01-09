@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_puzzle/config/ui.dart';
 import 'package:flutter_puzzle/widgets/game/board.dart';
-import 'package:flutter_puzzle/widgets/game/material/control.dart';
-import 'package:flutter_puzzle/widgets/game/material/steps.dart';
+import 'package:flutter_puzzle/widgets/game/material/start_button.dart';
+import 'package:flutter_puzzle/widgets/game/material/moves.dart';
 import 'package:flutter_puzzle/widgets/game/material/stopwatch.dart';
 import 'package:flutter_puzzle/widgets/game/presenter/main.dart';
 import 'package:flutter_puzzle/widgets/game/settings.dart';
@@ -249,6 +249,7 @@ class GameMaterialPage extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         FloatingActionButton.extended(
+          heroTag: 'shuffle',
             onPressed: () {
               presenter.reset();
             },
