@@ -1,12 +1,9 @@
 import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart' hide AboutDialog;
-import 'package:flutter/widgets.dart';
 import 'package:flutter_puzzle/config/ui.dart';
 import 'package:flutter_puzzle/data/board.dart';
 import 'package:flutter_puzzle/utils/platform.dart';
-import 'package:flutter_puzzle/widgets/about/dialog.dart';
-import 'package:flutter_puzzle/widgets/donate/dialog.dart';
 import 'package:flutter_puzzle/widgets/game/board.dart';
 import 'package:flutter_puzzle/widgets/game/material/page.dart';
 
@@ -72,50 +69,18 @@ Widget createMoreBottomSheet(
       );
 
   final items = <Widget>[
-    SizedBox(height: 16),
+    const SizedBox(height: 16),
     Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        SizedBox(width: 4),
-        IconButton(
-          icon: const Icon(
-            Icons.info_outline,
-            semanticLabel: "Info",
-          ),
-          onPressed: () {
-            Navigator.of(context).pop();
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return AboutDialog();
-                });
-          },
-        ),
-        ///TODO : ADD INAPP PURCHASE
-        // if (platformCheck(() => Platform.isAndroid || Platform.isIOS))
-        //   IconButton(
-        //     icon: const Icon(
-        //       Icons.credit_card,
-        //       semanticLabel: "Donations",
-        //     ),
-        //     onPressed: () {
-        //       Navigator.of(context).pop();
-        //       showDialog(
-        //           context: context,
-        //           builder: (context) {
-        //             return DonateDialog();
-        //           });
-        //     },
-        //   ),
         Expanded(
           child: Align(
             alignment: Alignment.centerRight,
             child: OutlineButton(
               shape: const RoundedRectangleBorder(
-                borderRadius:
-                    const BorderRadius.all(const Radius.circular(16.0)),
+                borderRadius: BorderRadius.all(Radius.circular(16.0)),
               ),
               onPressed: () {
                 // Cycle themes like this:
@@ -144,7 +109,7 @@ Widget createMoreBottomSheet(
     SizedBox(height: 4),
     Row(
       children: <Widget>[
-        SizedBox(width: 8),
+        const SizedBox(width: 8),
         Expanded(
           child: Align(
             alignment: Alignment.centerLeft,
@@ -158,20 +123,8 @@ Widget createMoreBottomSheet(
             child: createBoard(size: 5),
           ),
         ),
-        SizedBox(width: 8),
+        const SizedBox(width: 8),
       ],
-    ),
-    SizedBox(height: 16),
-    CheckboxListTile(
-      dense: true,
-      title: const Text('Speed run mode'),
-      secondary: const Icon(Icons.timer),
-      subtitle: const Text('Reduce animations and switch controls to taps'),
-      value: config.isSpeedRunModeEnabled,
-      onChanged: (bool? value) {
-        var shouldEnableSpeedRun = !config.isSpeedRunModeEnabled!;
-        config.setSpeedRunModeEnabled(shouldEnableSpeedRun, save: true);
-      },
     ),
   ];
 

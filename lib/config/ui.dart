@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ConfigUiContainer extends StatefulWidget {
   final Widget child;
 
-  ConfigUiContainer({required this.child});
+ const ConfigUiContainer({required this.child});
 
   static _ConfigUiContainerState of(BuildContext context) {
     return context
@@ -47,7 +47,6 @@ class _ConfigUiContainerState extends State<ConfigUiContainer> {
       return;
     }
     _loadThemePreferences(prefs);
-    _loadSpeedRunPreferences(prefs);
   }
 
   void _loadThemePreferences(final SharedPreferences prefs) {
@@ -57,12 +56,6 @@ class _ConfigUiContainerState extends State<ConfigUiContainer> {
     } else {
       setUseDarkTheme(useDarkTheme);
     }
-  }
-
-  void _loadSpeedRunPreferences(final SharedPreferences prefs) {
-    final isSpeedRunModeEnabled = prefs.getBool(_KEY_SPEED_RUN_MODE_ENABLED) ??
-        this.isSpeedRunModeEnabled;
-    setSpeedRunModeEnabled(isSpeedRunModeEnabled!);
   }
 
   /// Sets if user want app to show up in a dark theme or
@@ -84,22 +77,6 @@ class _ConfigUiContainerState extends State<ConfigUiContainer> {
 
     setState(() {
       this.useDarkTheme = useDarkTheme;
-    });
-  }
-
-  void setSpeedRunModeEnabled(final bool isEnabled,
-      {final bool save = false}) async {
-    // Save the choice if we
-    // want to.
-    if (save) {
-      try {
-        final prefs = await SharedPreferences.getInstance();
-        prefs.setBool(_KEY_SPEED_RUN_MODE_ENABLED, isEnabled);
-      } on Exception {}
-    }
-
-    setState(() {
-      isSpeedRunModeEnabled = isEnabled;
     });
   }
 

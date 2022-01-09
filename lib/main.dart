@@ -4,30 +4,21 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_puzzle/config/ui.dart';
-import 'package:flutter_puzzle/play_games.dart';
 import 'package:flutter_puzzle/utils/platform.dart';
 import 'package:flutter_puzzle/widgets/game/page.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
 
 void main() {
-  // For play billing library 2.0 on Android, it is mandatory to call
-  // [enablePendingPurchases](https://developer.android.com/reference/com/android/billingclient/api/BillingClient.Builder.html#enablependingpurchases)
-  // as part of initializing the app.
-  // InAppPurchaseConnection.enablePendingPurchases();
   _setTargetPlatformForDesktop();
   runApp(
-    // PlayGamesContainer(
-    //   child: 
-      ConfigUiContainer(
-        child: const  MyApp(),
-      ),
-    // ),
+    const ConfigUiContainer(
+      child: MyApp(),
+    ),
   );
 }
 
 /// If the current platform is desktop, override the default platform to
 /// a supported platform (iOS for macOS, Android for Linux and Windows).
-/// Otherwise, do nothing.
+/// Else, do nothing.
 void _setTargetPlatformForDesktop() {
   TargetPlatform? targetPlatform;
   if (platformCheck(() => Platform.isMacOS)) {
@@ -45,28 +36,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const title = 'Flutter Puzzle';
-    return const _MyMaterialApp(title: title);
+    return _MyMaterialApp();
   }
 }
 
 /// Base class for all platforms, such as
 /// [Platform.isIOS] or [Platform.isAndroid].
 abstract class _MyPlatformApp extends StatelessWidget {
-  final String title;
-
-  const _MyPlatformApp({required this.title});
+  const _MyPlatformApp();
 }
 
 class _MyMaterialApp extends _MyPlatformApp {
-  const _MyMaterialApp({required String title}) : super(title: title);
-
   @override
   Widget build(BuildContext context) {
     final ui = ConfigUiContainer.of(context);
 
     ThemeData applyDecor(ThemeData theme) => theme.copyWith(
           primaryColor: Colors.blue,
-          accentColor: Colors.amberAccent,
           accentIconTheme: theme.iconTheme.copyWith(color: Colors.black),
           dialogTheme: const DialogTheme(
             shape: RoundedRectangleBorder(
@@ -76,6 +62,8 @@ class _MyMaterialApp extends _MyPlatformApp {
           textTheme: theme.textTheme.apply(fontFamily: 'ManRope'),
           primaryTextTheme: theme.primaryTextTheme.apply(fontFamily: 'ManRope'),
           accentTextTheme: theme.accentTextTheme.apply(fontFamily: 'ManRope'),
+          colorScheme:
+              ColorScheme.fromSwatch().copyWith(secondary: Colors.amberAccent),
         );
 
     final baseDarkTheme = applyDecor(ThemeData(
@@ -103,7 +91,6 @@ class _MyMaterialApp extends _MyPlatformApp {
     }
 
     return MaterialApp(
-      title: title,
       darkTheme: darkTheme,
       theme: lightTheme,
       home: Builder(
@@ -131,12 +118,8 @@ class _MyMaterialApp extends _MyPlatformApp {
 }
 
 class _MyCupertinoApp extends _MyPlatformApp {
-  _MyCupertinoApp({required String title}) : super(title: title);
-
   @override
   Widget build(BuildContext context) {
-    return CupertinoApp(
-      title: title,
-    );
+    return const CupertinoApp();
   }
 }

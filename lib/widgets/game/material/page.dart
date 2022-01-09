@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_puzzle/config/ui.dart';
 import 'package:flutter_puzzle/widgets/game/board.dart';
 import 'package:flutter_puzzle/widgets/game/material/control.dart';
@@ -9,7 +8,6 @@ import 'package:flutter_puzzle/widgets/game/material/sheets.dart';
 import 'package:flutter_puzzle/widgets/game/material/steps.dart';
 import 'package:flutter_puzzle/widgets/game/material/stopwatch.dart';
 import 'package:flutter_puzzle/widgets/game/presenter/main.dart';
-import 'package:flutter_puzzle/widgets/icons/app.dart';
 
 class GameMaterialPage extends StatelessWidget {
   /// Maximum size of the board,
@@ -46,7 +44,7 @@ class GameMaterialPage extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           GameStopwatchWidget(
-            time: presenter.time!,
+            time: presenter.time ?? 0,
             fontSize: orientation == Orientation.landscape && !isLargeScreen
                 ? 56.0
                 : 72.0,
@@ -62,28 +60,17 @@ class GameMaterialPage extends StatelessWidget {
         // Portrait layout
         //
         return Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: Text(
+              'Flutter Puzzle',
+              style: Theme.of(context).textTheme.headline6,
+            ),
+          ),
           body: SafeArea(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                isTallScreen
-                    ? Container(
-                        height: 56,
-                        child: Center(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              const AppIcon(size: 24.0),
-                              const SizedBox(width: 16.0),
-                              Text(
-                                'Flutter Puzzle',
-                                style: Theme.of(context).textTheme.headline6,
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                    : const SizedBox(height: 0),
                 const SizedBox(height: 32.0),
                 Center(
                   child: statusWidget,
@@ -144,8 +131,8 @@ class GameMaterialPage extends StatelessWidget {
         : Colors.black12;
     return Center(
       child: Container(
-        margin: EdgeInsets.all(kBoardMargin),
-        padding: EdgeInsets.all(kBoardPadding),
+        margin: const EdgeInsets.all(kBoardMargin),
+        padding: const EdgeInsets.all(kBoardPadding),
         decoration: BoxDecoration(
           color: background,
           borderRadius: BorderRadius.circular(16.0),
@@ -164,7 +151,7 @@ class GameMaterialPage extends StatelessWidget {
               autofocus: true,
               focusNode: _boardFocus,
               onKey: (event) {
-                if (!(event is RawKeyDownEvent)) {
+                if ((event is! RawKeyDownEvent)) {
                   return;
                 }
 
@@ -198,7 +185,6 @@ class GameMaterialPage extends StatelessWidget {
                 presenter.tap(point: tapPoint);
               },
               child: BoardWidget(
-                isSpeedRunModeEnabled: config.isSpeedRunModeEnabled!,
                 board: presenter.board!,
                 size: puzzleSize,
                 onTap: (point) {
@@ -217,19 +203,19 @@ class GameMaterialPage extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Container(
+        SizedBox(
           width: 48,
           height: 48,
           child: Material(
             elevation: 0.0,
             color: Colors.transparent,
-            shape: CircleBorder(),
+            shape: const CircleBorder(),
             child: InkWell(
               onTap: () {
                 presenter.reset();
               },
-              customBorder: CircleBorder(),
-              child: Icon(
+              customBorder: const CircleBorder(),
+              child: const Icon(
                 Icons.refresh,
                 semanticLabel: "Reset",
               ),
@@ -244,13 +230,13 @@ class GameMaterialPage extends StatelessWidget {
           },
         ),
         const SizedBox(width: 16.0),
-        Container(
+        SizedBox(
           width: 48,
           height: 48,
           child: Material(
             elevation: 0.0,
             color: Colors.transparent,
-            shape: CircleBorder(),
+            shape: const CircleBorder(),
             child: InkWell(
               onTap: () {
                 // Show the modal bottom sheet on
@@ -265,8 +251,8 @@ class GameMaterialPage extends StatelessWidget {
                   },
                 );
               },
-              customBorder: CircleBorder(),
-              child: Icon(
+              customBorder: const CircleBorder(),
+              child: const Icon(
                 Icons.more_vert,
                 semanticLabel: "Settings",
               ),

@@ -10,11 +10,11 @@ class AppIcon extends StatelessWidget {
     final size = this.size ?? IconTheme.of(context).size;
     return Semantics(
       excludeSemantics: true,
-      child: Container(
+      child: SizedBox(
         width: size,
         height: size,
         child: Material(
-          shape: CircleBorder(),
+          shape:const CircleBorder(),
           elevation: 4.0,
           color: Theme.of(context).primaryColor,
           child: Center(

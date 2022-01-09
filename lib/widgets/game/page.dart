@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_puzzle/data/result.dart';
-import 'package:flutter_puzzle/play_games.dart';
 import 'package:flutter_puzzle/widgets/game/material/page.dart';
 import 'package:flutter_puzzle/widgets/game/material/victory.dart';
 import 'package:flutter_puzzle/widgets/game/presenter/main.dart';

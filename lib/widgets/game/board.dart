@@ -14,14 +14,11 @@ class BoardWidget extends StatefulWidget {
 
   final Function(Point<int>)? onTap;
 
-  final bool isSpeedRunModeEnabled;
-
   BoardWidget({
     Key? key,
     required this.board,
     required this.size,
     this.showNumbers = true,
-    this.isSpeedRunModeEnabled = false,
     this.onTap,
   }) : super(key: key);
 
@@ -36,8 +33,7 @@ class _BoardWidgetState extends State<BoardWidget>
   static const _ANIM_MOVE_TAG = "move";
   static const _ANIM_SCALE_TAG = "scale";
 
-  static const num _ANIM_DURATION_MULTIPLIER_NORMAL = 1.0;
-  static const num _ANIM_DURATION_MULTIPLIER_SPEED_RUN = 0.6;
+  static const num _ANIM_DURATION_MULTIPLIER_SPEED_RUN = 2.0;
 
   static const int _ANIM_DURATION_BLINK_HALF = 200;
   static const int _ANIM_DURATION_MOVE = 350;
@@ -76,21 +72,14 @@ class _BoardWidgetState extends State<BoardWidget>
 
   Function(double, double)? _onPanUpdateDelegate;
 
-  bool? _isSpeedRunModeEnabled;
-
   /// Applies normal/speed run duration modifiers */
   int _applyAnimationMultiplier(int duration) {
-    if (_isSpeedRunModeEnabled!) {
-      return (duration.toDouble() * _ANIM_DURATION_MULTIPLIER_SPEED_RUN)
-          .toInt();
-    } else
-      return (duration.toDouble() * _ANIM_DURATION_MULTIPLIER_NORMAL).toInt();
+    return (duration.toDouble() * _ANIM_DURATION_MULTIPLIER_SPEED_RUN).toInt();
   }
 
   @override
   void initState() {
     super.initState();
-    _isSpeedRunModeEnabled = widget.isSpeedRunModeEnabled;
     _performSetBoard(
       newBoard: widget.board,
     );
@@ -99,9 +88,7 @@ class _BoardWidgetState extends State<BoardWidget>
   @override
   void didUpdateWidget(BoardWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    setState(() {
-      _isSpeedRunModeEnabled = widget.isSpeedRunModeEnabled;
-    });
+
     _performSetBoard(
       newBoard: widget.board,
       oldBoard: oldWidget.board,
@@ -117,7 +104,9 @@ class _BoardWidgetState extends State<BoardWidget>
         // Dispose current animations. This is not necessary, but good
         // to do.
         chips?.forEach((chip) {
-          chip.animations.values.forEach((controller) => controller.dispose());
+          for (var controller in chip.animations.values) {
+            controller.dispose();
+          }
         });
 
         chips = null;
@@ -167,7 +156,7 @@ class _BoardWidgetState extends State<BoardWidget>
               final chip = board.chips[chips!.length + index];
               final x = chip.currentPoint.x / board.size;
               final y = chip.currentPoint.y / board.size;
-              final scale = 0.0; // will be scaled by the animation
+              const scale = 0.0; // will be scaled by the animation
               final color =
                   HSLColor.fromAHSL(1, hueStep * chip.number, 0.7, 0.5)
                       .toColor();
@@ -517,7 +506,7 @@ class _BoardWidgetState extends State<BoardWidget>
         backgroundColor,
         chipSize / 3,
         size: widget.size,
-        onPressed: widget.onTap != null && !_isSpeedRunModeEnabled!
+        onPressed: widget.onTap != null
             ? () {
                 widget.onTap!(chip.currentPoint);
               }
@@ -549,7 +538,7 @@ class _BoardWidgetState extends State<BoardWidget>
   void onTapDown(TapDownDetails details) {
     final board = widget.board;
 
-    if (board == null || chips == null || !_isSpeedRunModeEnabled!) {
+    if (board == null || chips == null) {
       return;
     }
 
@@ -564,7 +553,7 @@ class _BoardWidgetState extends State<BoardWidget>
   void onPanStart(BuildContext context, DragStartDetails details) {
     final board = widget.board;
 
-    if (board == null || chips == null || _isSpeedRunModeEnabled!) {
+    if (board == null || chips == null) {
       _onPanUpdateDelegate = null;
       _onPanEndDelegate = null;
       return;
@@ -777,7 +766,7 @@ class _Chip {
 
   Color overlayColor = Colors.white.withOpacity(0.0);
 
-  Map<String, AnimationController> animations = Map();
+  Map<String, AnimationController> animations = {};
 
   Point<int> currentPoint;
 

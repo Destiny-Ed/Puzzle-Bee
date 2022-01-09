@@ -69,7 +69,7 @@ class _GamePlayStopButtonState extends State<GamePlayStopButton>
     final animRatioStop = _range(animation!.value, begin: 0.0, end: 1.0);
 
     // Calculate the background color of the FAB.
-    final backgroundColorAccent = theme.accentColor.withOpacity(animRatioPlay);
+    final backgroundColorAccent = theme.colorScheme.secondary.withOpacity(animRatioPlay);
     final backgroundColorCard = theme.cardColor.withOpacity(animRatioStop);
     final backgroundColor =
         Color.alphaBlend(backgroundColorAccent, backgroundColorCard);

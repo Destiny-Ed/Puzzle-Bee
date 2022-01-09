@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_puzzle/data/result.dart';
 import 'package:flutter_puzzle/links.dart';
-import 'package:flutter_puzzle/play_games.dart';
 import 'package:share/share.dart';
 
 import '../format.dart';
@@ -20,16 +19,16 @@ class GameVictoryDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final timeFormatted = timeFormatter(result.time);
     final actions = <Widget>[
-       FlatButton(
-        child:  Text("Share"),
+      FlatButton(
+        child: Text("Share"),
         onPressed: () {
           Share.share("I have solved the Flutter Puzzle's "
               "${result.size}x${result.size} puzzle in $timeFormatted "
-              "with just ${result.steps} steps! Check it out: $URL_REPOSITORY");
+              "with just ${result.steps} steps! Check it out: $APP_URL");
         },
       ),
-       FlatButton(
-        child: const  Text("Close"),
+      FlatButton(
+        child: const Text("Close"),
         onPressed: () {
           Navigator.of(context).pop();
         },

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_puzzle/widgets/auto_size_text.dart';
 import 'package:flutter_puzzle/widgets/game/format.dart';
 import 'package:flutter_puzzle/widgets/icons/stopwatch.dart';
@@ -92,14 +91,20 @@ class _GameStopwatchWidgetState extends State<GameStopwatchWidget>
       animation: animation!,
       builder: (context, child) {
         return Transform.scale(
-          alignment:  const Alignment(0.0, 0.75),
+          alignment: const Alignment(0.0, 0.75),
           scale: 0.8 + 0.2 * animation!.value,
           child: child,
         );
       },
-      child: Row(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
+          StopwatchIcon(
+            size: 24,
+            millis: time,
+            color: Theme.of(context).iconTheme.color,
+          ),
+          const SizedBox(height: 10.0),
           SizedBox(
             width: 220.0,
             height: 108.0,
@@ -112,12 +117,6 @@ class _GameStopwatchWidgetState extends State<GameStopwatchWidget>
                     color: Theme.of(context).textTheme.headline6!.color,
                   ),
             ),
-          ),
-          const SizedBox(width: 16.0),
-          StopwatchIcon(
-            size: 24,
-            millis: time,
-            color: Theme.of(context).iconTheme.color,
           ),
         ],
       ),
