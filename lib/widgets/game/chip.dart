@@ -30,7 +30,7 @@ class ChipWidget extends StatelessWidget {
       borderRadius: BorderRadius.all(Radius.circular(isCompact ? 4.0 : 8.0)),
     );
 
-    var color = Theme.of(context).cardColor;
+    var color = Theme.of(context).primaryColor.withOpacity(0.5);
     color = Color.alphaBlend(backgroundColor, color);
     color = Color.alphaBlend(overlayColor, color);
 

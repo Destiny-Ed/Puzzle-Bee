@@ -39,6 +39,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ///Theme Toggle
 
                   CheckboxListTile(
+                    contentPadding: const EdgeInsets.all(0),
                     value: _isDark,
                     onChanged: (value) {
                       bool shouldUseDarkTheme;
@@ -98,6 +99,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       const SizedBox(width: 8),
                     ],
                   ),
+                  const Divider(),
 
                   ///Medium
                   Container(
@@ -126,6 +128,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       const SizedBox(width: 8),
                     ],
                   ),
+                  const Divider(),
 
                   ///Hard
                   Container(
@@ -164,31 +167,30 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Widget createBoard({int? size}) => Center(
-        child: Column(
-          children: <Widget>[
-            Semantics(
-              excludeSemantics: true,
-              child: Align(
-                alignment: Alignment.center,
-                child: Text('${size}x$size'),
+        child: GestureDetector(
+          onTap: () {
+            Navigator.of(context).pop(size);
+          },
+          child: Column(
+            children: <Widget>[
+              Semantics(
+                excludeSemantics: true,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text('${size}x$size'),
+                ),
               ),
-            ),
-            Container(
-              margin: const EdgeInsets.all(8.0),
-              padding: const EdgeInsets.all(4.0),
-              decoration: BoxDecoration(
-                color: Theme.of(context).brightness == Brightness.dark
-                    ? Colors.black54
-                    : Colors.black12,
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: Semantics(
-                label: '${size}x$size',
-                child: InkWell(
-                  onTap: () {
-                    // call(size!);
-                    Navigator.of(context).pop(size);
-                  },
+              Container(
+                margin: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(4.0),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.black54
+                      : Colors.black12,
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: Semantics(
+                  label: '${size}x$size',
                   child: LayoutBuilder(
                     builder:
                         (BuildContext context, BoxConstraints constraints) {
@@ -213,8 +215,8 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
 }
