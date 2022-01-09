@@ -69,36 +69,57 @@ class _GamePlayStopButtonState extends State<GamePlayStopButton>
     final animRatioStop = _range(animation!.value, begin: 0.0, end: 1.0);
 
     // Calculate the background color of the FAB.
-    final backgroundColorAccent = theme.colorScheme.secondary.withOpacity(animRatioPlay);
+    final backgroundColorAccent =
+        theme.colorScheme.secondary.withOpacity(animRatioPlay);
     final backgroundColorCard = theme.cardColor.withOpacity(animRatioStop);
     final backgroundColor =
         Color.alphaBlend(backgroundColorAccent, backgroundColorCard);
 
-    return FloatingActionButton(
+    return FloatingActionButton.extended(
       backgroundColor: backgroundColor,
       tooltip: widget.isPlaying ? "Stop" : "Play",
       onPressed: () => widget.onTap?.call(),
-      child: Stack(
-        children: <Widget>[
-          Opacity(
-            opacity: animRatioPlay,
-            child: Transform.rotate(
-              angle: animation!.value * pi / 2.0,
-              child: Icon(
-                Icons.play_arrow,
-                color: theme.accentIconTheme.color,
+      label: Row(
+        children: [
+          Stack(
+            children: <Widget>[
+              Opacity(
+                opacity: animRatioPlay,
+                child: Transform.rotate(
+                  angle: animation!.value * pi / 2.0,
+                  child: Row(
+                    children: [
+                      Text(
+                        'Start',
+                        style: TextStyle(color: theme.iconTheme.color),
+                      ),
+                      Icon(
+                        Icons.play_arrow,
+                        color: theme.iconTheme.color,
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ),
-          Opacity(
-            opacity: animRatioStop,
-            child: Transform.rotate(
-              angle: animation!.value * pi / 2.0,
-              child: Icon(
-                Icons.stop,
-                color: theme.iconTheme.color,
+              Opacity(
+                opacity: animRatioStop,
+                child: Transform.rotate(
+                  angle: animation!.value / 100.0,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.stop,
+                        color: theme.iconTheme.color,
+                      ),
+                      Text(
+                        'Stop',
+                        style: TextStyle(color: theme.iconTheme.color),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         ],
       ),

@@ -35,7 +35,6 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    const title = 'Flutter Puzzle';
     return _MyMaterialApp();
   }
 }
@@ -53,7 +52,7 @@ class _MyMaterialApp extends _MyPlatformApp {
 
     ThemeData applyDecor(ThemeData theme) => theme.copyWith(
           primaryColor: Colors.blue,
-          accentIconTheme: theme.iconTheme.copyWith(color: Colors.black),
+          // iconTheme: theme.iconTheme.copyWith(color: Colors.white),
           dialogTheme: const DialogTheme(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(16.0)),
@@ -63,7 +62,7 @@ class _MyMaterialApp extends _MyPlatformApp {
           primaryTextTheme: theme.primaryTextTheme.apply(fontFamily: 'ManRope'),
           accentTextTheme: theme.accentTextTheme.apply(fontFamily: 'ManRope'),
           colorScheme:
-              ColorScheme.fromSwatch().copyWith(secondary: Colors.amberAccent),
+              ColorScheme.fromSwatch().copyWith(secondary: Colors.blue),
         );
 
     final baseDarkTheme = applyDecor(ThemeData(

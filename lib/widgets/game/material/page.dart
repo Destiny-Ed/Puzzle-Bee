@@ -38,7 +38,6 @@ class GameMaterialPage extends StatelessWidget {
     final isTallScreen = screenHeight > 800 || screenHeight / screenWidth > 1.9;
     final isLargeScreen = screenWidth > 400;
 
-    final fabWidget = _buildFab(context);
     final boardWidget = _buildBoard(context);
     return OrientationBuilder(builder: (context, orientation) {
       final statusWidget = Column(
@@ -63,25 +62,22 @@ class GameMaterialPage extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            title: Text(
+            title: const Text(
               'Flutter Puzzle',
-              style: Theme.of(context).textTheme.headline6,
             ),
             actions: [
-              InkWell(
+              GestureDetector(
                 onTap: () {
                   Navigator.push(
                           context,
                           CupertinoPageRoute(
                               builder: (context) => const SettingsPage()))
                       .then((value) {
-                    print(value);
                     if (value != null) {
                       presenter.resize(value);
                     }
                   });
                 },
-                customBorder: const CircleBorder(),
                 child: const Padding(
                   padding: EdgeInsets.all(10.0),
                   child: Icon(
@@ -115,7 +111,7 @@ class GameMaterialPage extends StatelessWidget {
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: fabWidget,
+          floatingActionButton: _buildFab(context),
         );
       } else {
         //
@@ -125,9 +121,32 @@ class GameMaterialPage extends StatelessWidget {
           body: SafeArea(
             child: Row(
               children: <Widget>[
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => const SettingsPage()))
+                        .then((value) {
+                      if (value != null) {
+                        presenter.resize(value);
+                      }
+                    });
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.all(15.0),
+                    child: CircleAvatar(
+                      backgroundColor: Colors.blue,
+                      child: Icon(
+                        Icons.settings,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
                 Expanded(
                   child: boardWidget,
-                  flex: 3,
+                  flex: 2,
                 ),
                 Expanded(
                   child: Column(
@@ -135,7 +154,7 @@ class GameMaterialPage extends StatelessWidget {
                     children: <Widget>[
                       statusWidget,
                       const SizedBox(height: 48.0),
-                      fabWidget,
+                      _buildFab(context),
                     ],
                   ),
                   flex: 2,
@@ -228,25 +247,11 @@ class GameMaterialPage extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        SizedBox(
-          width: 48,
-          height: 48,
-          child: Material(
-            elevation: 0.0,
-            color: Colors.transparent,
-            shape: const CircleBorder(),
-            child: InkWell(
-              onTap: () {
-                presenter.reset();
-              },
-              customBorder: const CircleBorder(),
-              child: const Icon(
-                Icons.refresh,
-                semanticLabel: "Reset",
-              ),
-            ),
-          ),
-        ),
+        FloatingActionButton.extended(
+            onPressed: () {
+              presenter.reset();
+            },
+            label: const Text('Shuffle')),
         const SizedBox(width: 16.0),
         GamePlayStopButton(
           isPlaying: presenter.isPlaying(),

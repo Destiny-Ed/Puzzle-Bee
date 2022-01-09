@@ -86,8 +86,7 @@ class GamePresenterWidgetState extends State<GamePresenterWidget>
       elapsedTime = deserializer.readInt();
       time = deserializer.readInt();
       steps = deserializer.readInt();
-      board = deserializer
-          .readDeserializable(boardFactory);
+      board = deserializer.readDeserializable(boardFactory);
     } catch (Exception) {}
 
     final now = DateTime.now().millisecondsSinceEpoch;
