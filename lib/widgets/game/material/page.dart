@@ -1,13 +1,14 @@
 import 'dart:math';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_puzzle/config/ui.dart';
 import 'package:flutter_puzzle/widgets/game/board.dart';
 import 'package:flutter_puzzle/widgets/game/material/control.dart';
-import 'package:flutter_puzzle/widgets/game/material/sheets.dart';
 import 'package:flutter_puzzle/widgets/game/material/steps.dart';
 import 'package:flutter_puzzle/widgets/game/material/stopwatch.dart';
 import 'package:flutter_puzzle/widgets/game/presenter/main.dart';
+import 'package:flutter_puzzle/widgets/game/settings.dart';
 
 class GameMaterialPage extends StatelessWidget {
   /// Maximum size of the board,
@@ -69,17 +70,16 @@ class GameMaterialPage extends StatelessWidget {
             actions: [
               InkWell(
                 onTap: () {
-                  // Show the modal bottom sheet on
-                  // tap on "More" icon.
-                  showModalBottomSheet<void>(
-                    context: context,
-                    isScrollControlled: true,
-                    builder: (BuildContext context) {
-                      return createMoreBottomSheet(context, call: (size) {
-                        presenter.resize(size);
-                      });
-                    },
-                  );
+                  Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => const SettingsPage()))
+                      .then((value) {
+                    print(value);
+                    if (value != null) {
+                      presenter.resize(value);
+                    }
+                  });
                 },
                 customBorder: const CircleBorder(),
                 child: const Padding(
