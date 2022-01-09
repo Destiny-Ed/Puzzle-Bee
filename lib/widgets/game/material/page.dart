@@ -42,6 +42,7 @@ class GameMaterialPage extends StatelessWidget {
     return OrientationBuilder(builder: (context, orientation) {
       final statusWidget = Column(
         mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           GameStopwatchWidget(
             time: presenter.time ?? 0,

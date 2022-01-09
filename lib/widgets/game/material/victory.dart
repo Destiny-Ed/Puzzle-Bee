@@ -19,43 +19,42 @@ class GameVictoryDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final timeFormatted = timeFormatter(result.time);
     final actions = <Widget>[
-      FlatButton(
-        child: Text("Share"),
-        onPressed: () {
-          Share.share("I have solved the Flutter Puzzle's "
+      GestureDetector(
+        onTap: () {
+          Share.share("I successfully solved the Flutter Puzzle's "
               "${result.size}x${result.size} puzzle in $timeFormatted "
-              "with just ${result.steps} steps! Check it out: $APP_URL");
+              "with just ${result.steps} moves... Challenge me! $APP_URL");
         },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.blue),
+            // color: Colors.blue,
+          ),
+          child: const Text("Post"),
+        ),
       ),
-      FlatButton(
-        child: const Text("Close"),
-        onPressed: () {
+      GestureDetector(
+        onTap: () {
           Navigator.of(context).pop();
         },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.blue,
+          ),
+          child: const Text("Play Again"),
+        ),
       ),
     ];
 
-    // if (PlayGamesContainer.of(context).isSupported) {
-    //   actions.insert(
-    //     0,
-    //      FlatButton(
-    //       child:  const Text("Leaderboard"),
-    //       onPressed: () {
-    //         final playGames = PlayGamesContainer.of(context);
-    //         playGames.showLeaderboard(
-    //           key: PlayGames.getLeaderboardOfSize(result.size),
-    //         );
-    //       },
-    //     ),
-    //   );
-    // }
-
     return AlertDialog(
       title: Center(
-        child: Text(
-          "Congratulations!",
-          style: Theme.of(context).textTheme.headline5,
-        ),
+        // child: Text(
+        //   "Congratulations!",
+        //   style: Theme.of(context).textTheme.headline5,
+        // ),
+        child: Image.asset('artwork/congrat.png', width: 100),
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -87,7 +86,7 @@ class GameVictoryDialog extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Text(
-                    'Steps:',
+                    'Moves:',
                     style: Theme.of(context).textTheme.caption,
                   ),
                   Text(
