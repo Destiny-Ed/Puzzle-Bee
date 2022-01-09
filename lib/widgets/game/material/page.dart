@@ -66,6 +66,31 @@ class GameMaterialPage extends StatelessWidget {
               'Flutter Puzzle',
               style: Theme.of(context).textTheme.headline6,
             ),
+            actions: [
+              InkWell(
+                onTap: () {
+                  // Show the modal bottom sheet on
+                  // tap on "More" icon.
+                  showModalBottomSheet<void>(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (BuildContext context) {
+                      return createMoreBottomSheet(context, call: (size) {
+                        presenter.resize(size);
+                      });
+                    },
+                  );
+                },
+                customBorder: const CircleBorder(),
+                child: const Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Icon(
+                    Icons.settings,
+                    semanticLabel: "Settings",
+                  ),
+                ),
+              ),
+            ],
           ),
           body: SafeArea(
             child: Column(
@@ -228,36 +253,6 @@ class GameMaterialPage extends StatelessWidget {
           onTap: () {
             presenter.playStop();
           },
-        ),
-        const SizedBox(width: 16.0),
-        SizedBox(
-          width: 48,
-          height: 48,
-          child: Material(
-            elevation: 0.0,
-            color: Colors.transparent,
-            shape: const CircleBorder(),
-            child: InkWell(
-              onTap: () {
-                // Show the modal bottom sheet on
-                // tap on "More" icon.
-                showModalBottomSheet<void>(
-                  context: context,
-                  isScrollControlled: true,
-                  builder: (BuildContext context) {
-                    return createMoreBottomSheet(context, call: (size) {
-                      presenter.resize(size);
-                    });
-                  },
-                );
-              },
-              customBorder: const CircleBorder(),
-              child: const Icon(
-                Icons.more_vert,
-                semanticLabel: "Settings",
-              ),
-            ),
-          ),
         ),
       ],
     );

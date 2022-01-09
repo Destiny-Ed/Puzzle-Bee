@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ConfigUiContainer extends StatefulWidget {
   final Widget child;
 
- const ConfigUiContainer({required this.child});
+  const ConfigUiContainer({required this.child});
 
   static _ConfigUiContainerState of(BuildContext context) {
     return context
@@ -20,21 +20,17 @@ class ConfigUiContainer extends StatefulWidget {
 
 class _ConfigUiContainerState extends State<ConfigUiContainer> {
   static const _DEFAULT_USE_DARK_THEME = null;
-  static const _DEFAULT_SPEED_RUN_MODE_ENABLED = false;
   static const _KEY_USE_DARK_THEME = 'ui::dark_theme_enabled';
   static const _KEY_SPEED_RUN_MODE_ENABLED = 'ui::speed_run_mode_enabled';
 
   /// `true` if the app uses a global dark theme,
-  /// `false` otherwise.
+  /// `false` else.
   bool? useDarkTheme;
-
-  bool? isSpeedRunModeEnabled;
 
   @override
   void initState() {
     super.initState();
     useDarkTheme = _DEFAULT_USE_DARK_THEME;
-    isSpeedRunModeEnabled = _DEFAULT_SPEED_RUN_MODE_ENABLED;
 
     _loadPreferences();
   }
