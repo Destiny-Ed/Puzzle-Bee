@@ -206,7 +206,9 @@ class _SettingsPageState extends State<SettingsPage> {
                         excludeSemantics: true,
                         child: BoardWidget(
                           board: Board.createNormal(size!),
-                          onTap: null,
+                          onTap: (p0) {
+                            Navigator.of(context).pop(size);
+                          },
                           showNumbers: false,
                           size: puzzleSize,
                         ),

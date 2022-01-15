@@ -99,11 +99,11 @@ class _GameStopwatchWidgetState extends State<GameStopwatchWidget>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          StopwatchIcon(
-            size: 24,
-            millis: time,
-            color: Theme.of(context).iconTheme.color,
-          ),
+          // StopwatchIcon(
+          //   size: 24,
+          //   millis: time,
+          //   color: Theme.of(context).iconTheme.color,
+          // ),
           const SizedBox(height: 10.0),
           SizedBox(
             width: 220.0,

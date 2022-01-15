@@ -75,6 +75,7 @@ class GameMaterialPage extends StatelessWidget {
                               builder: (context) => const SettingsPage()))
                       .then((value) {
                     if (value != null) {
+                      ///Save size to SF
                       presenter.resize(value);
                     }
                   });
@@ -130,6 +131,7 @@ class GameMaterialPage extends StatelessWidget {
                                 builder: (context) => const SettingsPage()))
                         .then((value) {
                       if (value != null) {
+                        ///SAVE SIZE TO SF
                         presenter.resize(value);
                       }
                     });
@@ -171,75 +173,78 @@ class GameMaterialPage extends StatelessWidget {
   Widget _buildBoard(final BuildContext context) {
     final presenter = GamePresenterWidget.of(context);
     final config = ConfigUiContainer.of(context);
+
     final background = Theme.of(context).brightness == Brightness.dark
         ? Colors.black54
         : Colors.black12;
     return Center(
-      child: Container(
-        margin: const EdgeInsets.all(kBoardMargin),
-        padding: const EdgeInsets.all(kBoardPadding),
-        decoration: BoxDecoration(
-          color: background,
-          borderRadius: BorderRadius.circular(16.0),
-        ),
-        child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-            final puzzleSize = min(
-              min(
-                constraints.maxWidth,
-                constraints.maxHeight,
+      child: presenter.board == null
+          ? const CircularProgressIndicator()
+          : Container(
+              margin: const EdgeInsets.all(kBoardMargin),
+              padding: const EdgeInsets.all(kBoardPadding),
+              decoration: BoxDecoration(
+                color: background,
+                borderRadius: BorderRadius.circular(16.0),
               ),
-              kMaxBoardSize - (kBoardMargin + kBoardPadding) * 2,
-            );
+              child: LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+                  final puzzleSize = min(
+                    min(
+                      constraints.maxWidth,
+                      constraints.maxHeight,
+                    ),
+                    kMaxBoardSize - (kBoardMargin + kBoardPadding) * 2,
+                  );
 
-            return RawKeyboardListener(
-              autofocus: true,
-              focusNode: _boardFocus,
-              onKey: (event) {
-                if ((event is! RawKeyDownEvent)) {
-                  return;
-                }
+                  return RawKeyboardListener(
+                    autofocus: true,
+                    focusNode: _boardFocus,
+                    onKey: (event) {
+                      if ((event is! RawKeyDownEvent)) {
+                        return;
+                      }
 
-                int offsetY = 0;
-                int offsetX = 0;
-                switch (event.logicalKey.keyId) {
-                  case 0x100070052: // arrow up
-                    offsetY = 1;
-                    break;
-                  case 0x100070050: // arrow left
-                    offsetX = 1;
-                    break;
-                  case 0x10007004f: // arrow right
-                    offsetX = -1;
-                    break;
-                  case 0x100070051: // arrow down
-                    offsetY = -1;
-                    break;
-                  default:
-                    return;
-                }
-                final tapPoint =
-                    presenter.board!.blank + Point(offsetX, offsetY);
-                if (tapPoint.x < 0 ||
-                    tapPoint.x >= presenter.board!.size ||
-                    tapPoint.y < 0 ||
-                    tapPoint.y >= presenter.board!.size) {
-                  return;
-                }
+                      int offsetY = 0;
+                      int offsetX = 0;
+                      switch (event.logicalKey.keyId) {
+                        case 0x100070052: // arrow up
+                          offsetY = 1;
+                          break;
+                        case 0x100070050: // arrow left
+                          offsetX = 1;
+                          break;
+                        case 0x10007004f: // arrow right
+                          offsetX = -1;
+                          break;
+                        case 0x100070051: // arrow down
+                          offsetY = -1;
+                          break;
+                        default:
+                          return;
+                      }
+                      final tapPoint =
+                          presenter.board!.blank + Point(offsetX, offsetY);
+                      if (tapPoint.x < 0 ||
+                          tapPoint.x >= presenter.board!.size ||
+                          tapPoint.y < 0 ||
+                          tapPoint.y >= presenter.board!.size) {
+                        return;
+                      }
 
-                presenter.tap(point: tapPoint);
-              },
-              child: BoardWidget(
-                board: presenter.board!,
-                size: puzzleSize,
-                onTap: (point) {
-                  presenter.tap(point: point);
+                      presenter.tap(point: tapPoint);
+                    },
+                    child: BoardWidget(
+                      board: presenter.board!,
+                      size: puzzleSize,
+                      onTap: (point) {
+                        presenter.tap(point: point);
+                      },
+                    ),
+                  );
                 },
               ),
-            );
-          },
-        ),
-      ),
+            ),
     );
   }
 
@@ -249,7 +254,7 @@ class GameMaterialPage extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         FloatingActionButton.extended(
-          heroTag: 'shuffle',
+            heroTag: 'shuffle',
             onPressed: () {
               presenter.reset();
             },
