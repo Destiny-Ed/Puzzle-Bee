@@ -90,6 +90,7 @@ class _MyMaterialApp extends _MyPlatformApp {
     }
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       darkTheme: darkTheme,
       theme: lightTheme,
       home: Builder(
