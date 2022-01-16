@@ -1,4 +1,4 @@
-// package com.example.flutter_puzzle
+// package app.puzzle_bee
 
 // import com.example.gpg.PlayGamesPlugin
 // import io.flutter.plugin.common.PluginRegistry

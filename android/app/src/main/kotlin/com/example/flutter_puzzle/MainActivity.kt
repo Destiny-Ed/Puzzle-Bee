@@ -1,4 +1,4 @@
-package com.example.flutter_puzzle
+package app.puzzle_bee
 
 import io.flutter.embedding.android.FlutterActivity
 

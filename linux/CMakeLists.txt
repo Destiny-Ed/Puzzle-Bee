@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(runner LANGUAGES CXX)
 
-set(BINARY_NAME "flutter_puzzle")
-set(APPLICATION_ID "com.example.flutter_puzzle")
+set(BINARY_NAME "Puzzle Bee")
+set(APPLICATION_ID "app.puzzle_bee")
 
 cmake_policy(SET CMP0063 NEW)
 

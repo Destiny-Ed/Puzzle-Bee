@@ -1,6 +1,6 @@
 {
-    "name": "flutter_puzzle",
-    "short_name": "flutter_puzzle",
+    "name": "Puzzle Bee",
+    "short_name": "Puzzle Bee",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
