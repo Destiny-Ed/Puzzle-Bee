@@ -119,7 +119,10 @@ class _GameMaterialPageState extends State<GameMaterialPage> {
               children: <Widget>[
                 const SizedBox(height: 20.0),
                 Center(
-                  child: Text(name),
+                  child: Text(
+                    name,
+                    style: const TextStyle(fontSize: 18),
+                  ),
                 ),
                 Center(
                   child: statusWidget,

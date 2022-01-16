@@ -38,17 +38,6 @@ class _SignInState extends State<SignIn> {
                   ),
                   Row(
                     children: const [
-                      Text(
-                        'Sign In',
-                        style: TextStyle(fontSize: 22.0),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 5.0,
-                  ),
-                  Row(
-                    children: const [
                       Flexible(child: Text("Enter your credentials to login")),
                     ],
                   ),

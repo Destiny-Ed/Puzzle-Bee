@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_puzzle/provider/auth_provider.dart';
 import 'package:flutter_puzzle/utils/router.dart';
 import 'package:flutter_puzzle/widgets/auth/login.dart';
@@ -34,17 +35,6 @@ class _SignUpState extends State<SignUp> {
                   children: [
                     const SizedBox(
                       height: 50,
-                    ),
-                    Row(
-                      children: const [
-                        Text(
-                          'Sign Up',
-                          style: TextStyle(fontSize: 22.0),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 5.0,
                     ),
                     Row(
                       children: const [
@@ -129,8 +119,7 @@ class _SignUpState extends State<SignUp> {
                           const SizedBox(height: 20),
                           TextFormField(
                               decoration: const InputDecoration(
-                                labelText:
-                                    'Phone number with phone code e.g +233820193843',
+                                labelText: 'Phone number e.g +233 - 8243',
                                 hintText: "",
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
@@ -143,6 +132,12 @@ class _SignUpState extends State<SignUp> {
                                     ),
                                     borderSide: BorderSide(color: Colors.blue)),
                               ),
+                              keyboardType: TextInputType.phone,
+                              validator: (val) => val!.isEmpty
+                                  ? 'Phone number is required'
+                                  : !val.contains('+')
+                                      ? 'Invalid phone number'
+                                      : null,
                               onChanged: (val) {
                                 setState(() => phno = val);
                               }),

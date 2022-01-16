@@ -18,7 +18,7 @@ class _OTPConfState extends State<OTPConf> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Verify Email')),
+      appBar: AppBar(title: const Text('Verification')),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
@@ -33,17 +33,7 @@ class _OTPConfState extends State<OTPConf> {
                   const SizedBox(
                     height: 50,
                   ),
-                  Row(
-                    children: const [
-                      Text(
-                        'Verification',
-                        style: TextStyle(fontSize: 22.0),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 5.0,
-                  ),
+                  
                   Row(
                     children: const [
                       Flexible(
