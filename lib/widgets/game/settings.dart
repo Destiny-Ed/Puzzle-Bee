@@ -72,7 +72,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                   ),
 
-                  ///Easy
+                  // /Easy
                   Container(
                     alignment: Alignment.centerLeft,
                     child: const Text(
@@ -101,62 +101,26 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                   const Divider(),
 
-                  ///Medium
+                  // /Medium
                   Container(
                     alignment: Alignment.centerLeft,
                     child: const Text(
-                      'Mediun',
+                      'Mediun (Coming Soon)',
                     ),
                   ),
 
-                  Row(
-                    children: <Widget>[
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: createBoard(size: 5),
-                        ),
-                      ),
-                      Expanded(child: createBoard(size: 6)),
-                      Expanded(
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: createBoard(size: 7),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                    ],
-                  ),
+                 
                   const Divider(),
 
-                  ///Hard
+                  // ///Hard
                   Container(
                     alignment: Alignment.centerLeft,
                     child: const Text(
-                      'Hard',
+                      'Hard (Comming Soon)',
                     ),
                   ),
 
-                  Row(
-                    children: <Widget>[
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: createBoard(size: 8),
-                        ),
-                      ),
-                      Expanded(child: createBoard(size: 9)),
-                      Expanded(
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: createBoard(size: 10),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                    ],
-                  ),
+                 
                 ],
               ),
             ),
@@ -206,9 +170,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         excludeSemantics: true,
                         child: BoardWidget(
                           board: Board.createNormal(size!),
-                          onTap: (p0) {
-                            Navigator.of(context).pop(size);
-                          },
+                          onTap: null,
                           showNumbers: false,
                           size: puzzleSize,
                         ),
