@@ -3,8 +3,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_puzzle/config/ui.dart';
 import 'package:flutter_puzzle/data/board.dart';
+import 'package:flutter_puzzle/links.dart';
 import 'package:flutter_puzzle/provider/auth_provider.dart';
 import 'package:flutter_puzzle/widgets/game/board.dart';
+import 'package:share/share.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -70,6 +72,17 @@ class _SettingsPageState extends State<SettingsPage> {
                         : config.useDarkTheme == true
                             ? 'Switch to Light theme'
                             : 'Switch to Dark theme'),
+                  ),
+
+                  const Divider(),
+
+                  ListTile(
+                    title: const Text('Share App'),
+                    subtitle: const Text('Play Puzzle Bee with friends'),
+                    onTap: () {
+                      Share.share(
+                          "Hey, This is how I challenge and keep my mind active $APP_URL");
+                    },
                   ),
 
                   const Divider(),

@@ -21,7 +21,7 @@ class GameVictoryDialog extends StatelessWidget {
     final actions = <Widget>[
       GestureDetector(
         onTap: () {
-          Share.share("I successfully solved the Flutter Puzzle's "
+          Share.share("I successfully solved the Puzzle Bee's "
               "${result.size}x${result.size} puzzle in $timeFormatted "
               "with just ${result.steps} moves... Challenge me! $APP_URL");
         },

@@ -87,7 +87,7 @@ class _GameMaterialPageState extends State<GameMaterialPage> {
           appBar: AppBar(
             centerTitle: true,
             title: const Text(
-              'Flutter Puzzle',
+              'Puzzle Bee',
             ),
             actions: [
               GestureDetector(
