@@ -77,6 +77,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   const Divider(),
 
                   ListTile(
+                    contentPadding: const EdgeInsets.all(0),
                     title: const Text('Share App'),
                     subtitle: const Text('Play Puzzle Bee with friends'),
                     onTap: () {
