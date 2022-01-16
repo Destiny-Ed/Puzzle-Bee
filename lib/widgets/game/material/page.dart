@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'dart:math';
 import 'package:amplify_flutter/amplify.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_puzzle/config/ui.dart';
@@ -32,16 +34,20 @@ class _GameMaterialPageState extends State<GameMaterialPage> {
   @override
   void initState() {
     super.initState();
-    Amplify.Auth.fetchUserAttributes().then((value) {
-      for (int i = 0; i < value.length; i++) {
-        final data = value[i];
-        if (data.userAttributeKey == 'name') {
-          setState(() {
-            name = "Welcome ${data.value}";
-          });
-        }
+    if (!kIsWeb) {
+      if (Platform.isAndroid || Platform.isIOS) {
+        Amplify.Auth.fetchUserAttributes().then((value) {
+          for (int i = 0; i < value.length; i++) {
+            final data = value[i];
+            if (data.userAttributeKey == 'name') {
+              setState(() {
+                name = "Welcome ${data.value}";
+              });
+            }
+          }
+        });
       }
-    });
+    }
   }
 
   @override

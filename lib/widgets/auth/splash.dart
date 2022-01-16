@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_puzzle/utils/router.dart';
 import 'package:flutter_puzzle/widgets/auth/login.dart';
@@ -11,14 +14,22 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 2), () async {
-      try {
-        final awsUser = await Amplify.Auth.getCurrentUser();
-        //send user to dashboard
+      if (!kIsWeb) {
+        if (Platform.isAndroid || Platform.isIOS) {
+          try {
+            final awsUser = await Amplify.Auth.getCurrentUser();
+            //send user to dashboard
+            PageRouter(context).pushPageAndRemove(GamePage());
+          } on AuthException catch (e) {
+            //send user to login
+            print(e.message);
+            PageRouter(context).pushPageAndRemove(const SignIn());
+          }
+        } else {
+          PageRouter(context).pushPageAndRemove(GamePage());
+        }
+      } else {
         PageRouter(context).pushPageAndRemove(GamePage());
-      } on AuthException catch (e) {
-        //send user to login
-        print(e.message);
-        PageRouter(context).pushPageAndRemove(const SignIn());
       }
     });
     return Scaffold(

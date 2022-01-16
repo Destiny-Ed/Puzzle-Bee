@@ -61,7 +61,11 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    _configureAmplify();
+    if (!kIsWeb) {
+      if (Platform.isAndroid || Platform.isIOS) {
+        _configureAmplify();
+      }
+    }
   }
 
   @override

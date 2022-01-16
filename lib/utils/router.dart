@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class PageRouter {
@@ -9,7 +10,7 @@ class PageRouter {
 
   ///Android
   void pushPage(Widget page) {
-    if (Platform.isAndroid) {
+    if (kIsWeb) {
       Navigator.push(ctx!, MaterialPageRoute(builder: (ctx) => page));
     } else {
       Navigator.push(ctx!, CupertinoPageRoute(builder: (ctx) => page));
@@ -17,7 +18,7 @@ class PageRouter {
   }
 
   void pushPageAndRemove(Widget page) {
-    if (Platform.isAndroid) {
+    if (kIsWeb) {
       Navigator.pushAndRemoveUntil(
           ctx!, MaterialPageRoute(builder: (ctx) => page), (route) => false);
     } else {
