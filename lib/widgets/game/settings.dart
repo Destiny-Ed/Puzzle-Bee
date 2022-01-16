@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_puzzle/config/ui.dart';
 import 'package:flutter_puzzle/data/board.dart';
+import 'package:flutter_puzzle/provider/auth_provider.dart';
 import 'package:flutter_puzzle/widgets/game/board.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -28,6 +29,17 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text('Settings'),
+        actions: [
+          GestureDetector(
+            onTap: () {
+              AuthenticationProvider().logOut(context);
+            },
+            child: const Padding(
+              padding: EdgeInsets.all(10),
+              child: Icon(Icons.exit_to_app),
+            ),
+          )
+        ],
       ),
       body: CustomScrollView(
         slivers: [
@@ -109,7 +121,6 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                   ),
 
-                 
                   const Divider(),
 
                   // ///Hard
@@ -119,8 +130,6 @@ class _SettingsPageState extends State<SettingsPage> {
                       'Hard (Comming Soon)',
                     ),
                   ),
-
-                 
                 ],
               ),
             ),

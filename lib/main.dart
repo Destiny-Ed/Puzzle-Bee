@@ -7,9 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_puzzle/amplifyconfiguration.dart';
 import 'package:flutter_puzzle/config/ui.dart';
+import 'package:flutter_puzzle/provider/auth_provider.dart';
 import 'package:flutter_puzzle/utils/platform.dart';
 import 'package:flutter_puzzle/widgets/auth/splash.dart';
 import 'package:flutter_puzzle/widgets/game/page.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   _setTargetPlatformForDesktop();
@@ -118,29 +120,35 @@ class _MyMaterialApp extends _MyPlatformApp {
       lightTheme = baseLightTheme;
     }
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      darkTheme: darkTheme,
-      theme: lightTheme,
-      home: Builder(
-        builder: (context) {
-          bool useDarkTheme;
-          if (ui.useDarkTheme == null) {
-            var platformBrightness = MediaQuery.of(context).platformBrightness;
-            useDarkTheme = platformBrightness == Brightness.dark;
-          } else {
-            useDarkTheme = ui.useDarkTheme!;
-          }
-          final overlay = useDarkTheme
-              ? SystemUiOverlayStyle.light
-              : SystemUiOverlayStyle.dark;
-          SystemChrome.setSystemUIOverlayStyle(
-            overlay.copyWith(
-              statusBarColor: Colors.transparent,
-            ),
-          );
-          return const SplashScreen();
-        },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AuthenticationProvider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        darkTheme: darkTheme,
+        theme: lightTheme,
+        home: Builder(
+          builder: (context) {
+            bool useDarkTheme;
+            if (ui.useDarkTheme == null) {
+              var platformBrightness =
+                  MediaQuery.of(context).platformBrightness;
+              useDarkTheme = platformBrightness == Brightness.dark;
+            } else {
+              useDarkTheme = ui.useDarkTheme!;
+            }
+            final overlay = useDarkTheme
+                ? SystemUiOverlayStyle.light
+                : SystemUiOverlayStyle.dark;
+            SystemChrome.setSystemUIOverlayStyle(
+              overlay.copyWith(
+                statusBarColor: Colors.transparent,
+              ),
+            );
+            return const SplashScreen();
+          },
+        ),
       ),
     );
   }

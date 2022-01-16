@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_puzzle/provider/auth_provider.dart';
 import 'package:flutter_puzzle/utils/router.dart';
 import 'package:flutter_puzzle/widgets/auth/login.dart';
+import 'package:provider/provider.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -58,9 +60,7 @@ class _SignUpState extends State<SignUp> {
                         children: [
                           TextFormField(
                               decoration: const InputDecoration(
-                                prefixIcon:
-                                    Icon(Icons.person, color: Colors.blue),
-                                labelText: 'first and last name',
+                                labelText: 'FullName',
                                 hintText: '',
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
@@ -83,9 +83,7 @@ class _SignUpState extends State<SignUp> {
                           const SizedBox(height: 20),
                           TextFormField(
                               decoration: const InputDecoration(
-                                prefixIcon: Icon(Icons.alternate_email,
-                                    color: Colors.blue),
-                                labelText: 'email id',
+                                labelText: 'Email',
                                 hintText: '',
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
@@ -108,9 +106,7 @@ class _SignUpState extends State<SignUp> {
                           const SizedBox(height: 20),
                           TextFormField(
                               decoration: const InputDecoration(
-                                prefixIcon:
-                                    Icon(Icons.vpn_key, color: Colors.blue),
-                                labelText: 'password',
+                                labelText: 'Password',
                                 hintText: "",
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
@@ -133,9 +129,8 @@ class _SignUpState extends State<SignUp> {
                           const SizedBox(height: 20),
                           TextFormField(
                               decoration: const InputDecoration(
-                                prefixIcon:
-                                    Icon(Icons.phone, color: Colors.blue),
-                                labelText: 'phone number',
+                                labelText:
+                                    'Phone number with phone code e.g +233820193843',
                                 hintText: "",
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
@@ -148,17 +143,39 @@ class _SignUpState extends State<SignUp> {
                                     ),
                                     borderSide: BorderSide(color: Colors.blue)),
                               ),
-                              keyboardType: TextInputType.number,
                               onChanged: (val) {
                                 setState(() => phno = val);
                               }),
                           const SizedBox(height: 40),
-                          ElevatedButton(
-                            child: const Text('REGISTER'),
-                            onPressed: () async {
-                              // var _phno = '+91$phno';
-                            },
-                          ),
+                          Consumer<AuthenticationProvider>(
+                              builder: (context, auth, child) {
+                            WidgetsBinding.instance!.addPostFrameCallback((_) {
+                              if (auth.getMsg != '') {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text(auth.getMsg)));
+
+                                auth.clearMessage();
+                              }
+                            });
+                            return ElevatedButton(
+                              child: Text(auth.getStatus == true
+                                  ? 'PLEASE WAIT...'
+                                  : 'REGISTER'),
+                              onPressed: auth.getStatus == true
+                                  ? null
+                                  : () async {
+                                      // var _phno = '+91$phno';
+                                      if (_formKey.currentState!.validate()) {
+                                        auth.createAccount(
+                                            email: email,
+                                            password: pwd,
+                                            phone: phno,
+                                            username: uname,
+                                            ctx: context);
+                                      }
+                                    },
+                            );
+                          }),
                         ],
                       ),
                     ),

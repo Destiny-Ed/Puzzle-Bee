@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_puzzle/provider/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class OTPConf extends StatefulWidget {
   const OTPConf({Key? key, required this.email}) : super(key: key);
@@ -28,6 +30,9 @@ class _OTPConfState extends State<OTPConf> {
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  const SizedBox(
+                    height: 50,
+                  ),
                   Row(
                     children: const [
                       Text(
@@ -55,7 +60,7 @@ class _OTPConfState extends State<OTPConf> {
                       children: [
                         TextFormField(
                             decoration: const InputDecoration(
-                              labelText: 'verification code',
+                              labelText: 'Verification code',
                               hintText: '',
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.all(
@@ -76,12 +81,33 @@ class _OTPConfState extends State<OTPConf> {
                               setState(() => verCode = val);
                             }),
                         const SizedBox(height: 40),
-                        ElevatedButton(
-                          child: const Text('VERIFY'),
-                          onPressed: () async {
-                            print(verCode);
-                          },
-                        ),
+                        Consumer<AuthenticationProvider>(
+                            builder: (context, auth, child) {
+                          WidgetsBinding.instance!.addPostFrameCallback((_) {
+                            if (auth.getMsg != '') {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(auth.getMsg)));
+
+                              auth.clearMessage();
+                            }
+                          });
+                          return ElevatedButton(
+                            child: Text(auth.getStatus == true
+                                ? 'PLEASE WAIT...'
+                                : 'VERIFY'),
+                            onPressed: auth.getStatus == true
+                                ? null
+                                : () async {
+                                    // var _phno = '+91$phno';
+                                    if (_formKey.currentState!.validate()) {
+                                      auth.verifyEmail(
+                                          email: widget.email,
+                                          code: verCode,
+                                          ctx: context);
+                                    }
+                                  },
+                          );
+                        }),
                       ],
                     ),
                   ),

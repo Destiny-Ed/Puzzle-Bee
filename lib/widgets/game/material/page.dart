@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:amplify_flutter/amplify.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,7 +11,7 @@ import 'package:flutter_puzzle/widgets/game/material/stopwatch.dart';
 import 'package:flutter_puzzle/widgets/game/presenter/main.dart';
 import 'package:flutter_puzzle/widgets/game/settings.dart';
 
-class GameMaterialPage extends StatelessWidget {
+class GameMaterialPage extends StatefulWidget {
   /// Maximum size of the board,
   /// in pixels.
   static const kMaxBoardSize = 400.0;
@@ -19,7 +20,29 @@ class GameMaterialPage extends StatelessWidget {
 
   static const kBoardPadding = 4.0;
 
+  @override
+  State<GameMaterialPage> createState() => _GameMaterialPageState();
+}
+
+class _GameMaterialPageState extends State<GameMaterialPage> {
   final FocusNode _boardFocus = FocusNode();
+
+  String name = '';
+
+  @override
+  void initState() {
+    super.initState();
+    Amplify.Auth.fetchUserAttributes().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        final data = value[i];
+        if (data.userAttributeKey == 'name') {
+          setState(() {
+            name = "Welcome ${data.value}";
+          });
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +117,10 @@ class GameMaterialPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const SizedBox(height: 32.0),
+                const SizedBox(height: 20.0),
+                Center(
+                  child: Text(name),
+                ),
                 Center(
                   child: statusWidget,
                 ),
@@ -181,8 +207,8 @@ class GameMaterialPage extends StatelessWidget {
       child: presenter.board == null
           ? const CircularProgressIndicator()
           : Container(
-              margin: const EdgeInsets.all(kBoardMargin),
-              padding: const EdgeInsets.all(kBoardPadding),
+              margin: const EdgeInsets.all(GameMaterialPage.kBoardMargin),
+              padding: const EdgeInsets.all(GameMaterialPage.kBoardPadding),
               decoration: BoxDecoration(
                 color: background,
                 borderRadius: BorderRadius.circular(16.0),
@@ -194,7 +220,10 @@ class GameMaterialPage extends StatelessWidget {
                       constraints.maxWidth,
                       constraints.maxHeight,
                     ),
-                    kMaxBoardSize - (kBoardMargin + kBoardPadding) * 2,
+                    GameMaterialPage.kMaxBoardSize -
+                        (GameMaterialPage.kBoardMargin +
+                                GameMaterialPage.kBoardPadding) *
+                            2,
                   );
 
                   return RawKeyboardListener(

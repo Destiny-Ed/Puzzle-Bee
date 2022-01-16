@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_puzzle/provider/auth_provider.dart';
 import 'package:flutter_puzzle/utils/router.dart';
 import 'package:flutter_puzzle/widgets/auth/signup.dart';
+import 'package:provider/provider.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -59,9 +61,7 @@ class _SignInState extends State<SignIn> {
                       children: [
                         TextFormField(
                             decoration: const InputDecoration(
-                              prefixIcon: Icon(Icons.alternate_email,
-                                  color: Colors.blue),
-                              labelText: 'email id',
+                              labelText: 'Email',
                               hintText: '',
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.all(
@@ -84,9 +84,7 @@ class _SignInState extends State<SignIn> {
                         const SizedBox(height: 20),
                         TextFormField(
                             decoration: const InputDecoration(
-                              prefixIcon:
-                                  Icon(Icons.vpn_key, color: Colors.blue),
-                              labelText: 'password',
+                              labelText: 'Password',
                               hintText: "",
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.all(
@@ -107,10 +105,33 @@ class _SignInState extends State<SignIn> {
                               setState(() => pwd = val);
                             }),
                         const SizedBox(height: 40),
-                        ElevatedButton(
-                          child: const Text('LOGIN'),
-                          onPressed: () async {},
-                        ),
+                        Consumer<AuthenticationProvider>(
+                            builder: (context, auth, child) {
+                          WidgetsBinding.instance!.addPostFrameCallback((_) {
+                            if (auth.getMsg != '') {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(auth.getMsg)));
+
+                              auth.clearMessage();
+                            }
+                          });
+                          return ElevatedButton(
+                            child: Text(auth.getStatus == true
+                                ? 'PLEASE WAIT...'
+                                : 'LOGIN'),
+                            onPressed: auth.getStatus == true
+                                ? null
+                                : () async {
+                                    // var _phno = '+91$phno';
+                                    if (_formKey.currentState!.validate()) {
+                                      auth.loginUser(
+                                          email: email,
+                                          password: pwd,
+                                          ctx: context);
+                                    }
+                                  },
+                          );
+                        }),
                       ],
                     ),
                   ),

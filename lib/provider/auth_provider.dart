@@ -4,10 +4,11 @@ import 'package:amplify_flutter/amplify.dart';
 import 'package:flutter/foundation.dart' as notify;
 import 'package:flutter/material.dart';
 import 'package:flutter_puzzle/utils/router.dart';
+import 'package:flutter_puzzle/widgets/auth/login.dart';
 import 'package:flutter_puzzle/widgets/auth/verify_account.dart';
 import 'package:flutter_puzzle/widgets/game/page.dart';
 
-class AuthProvider extends notify.ChangeNotifier {
+class AuthenticationProvider extends notify.ChangeNotifier {
   String? _msg = '';
   bool _status = false;
 
@@ -22,6 +23,8 @@ class AuthProvider extends notify.ChangeNotifier {
       String? username,
       BuildContext? ctx}) async {
     ///Create New User
+    _status = true;
+    notifyListeners();
     var userAttributes = {'phone_number': '$phone', 'name': '$username'};
     try {
       SignUpResult res = await Amplify.Auth.signUp(
@@ -52,6 +55,8 @@ class AuthProvider extends notify.ChangeNotifier {
 
   void loginUser({String? email, String? password, BuildContext? ctx}) async {
     ///Login existing user
+    _status = true;
+    notifyListeners();
     try {
       SignInResult res = await Amplify.Auth.signIn(
         username: email!,
@@ -81,6 +86,8 @@ class AuthProvider extends notify.ChangeNotifier {
 
   void verifyEmail({String? email, String? code, BuildContext? ctx}) async {
     ///Verify user email
+    _status = true;
+    notifyListeners();
     try {
       SignUpResult res = await Amplify.Auth.confirmSignUp(
         username: email!,
@@ -90,7 +97,7 @@ class AuthProvider extends notify.ChangeNotifier {
         _status = false;
         _msg = "Success";
         notifyListeners();
-        PageRouter(ctx).pushPageAndRemove(GamePage());
+        PageRouter(ctx).pushPageAndRemove(const SignIn());
       }
     } on AuthException catch (e) {
       print(e.message);
@@ -106,5 +113,16 @@ class AuthProvider extends notify.ChangeNotifier {
       _status = false;
       notifyListeners();
     }
+  }
+
+  void logOut(BuildContext ctx) {
+    Amplify.Auth.signOut().then((value) {
+      PageRouter(ctx).pushPageAndRemove(const SignIn());
+    });
+  }
+
+  void clearMessage() {
+    _msg = '';
+    notifyListeners();
   }
 }
