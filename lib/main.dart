@@ -1,10 +1,14 @@
 import 'dart:io';
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+import 'package:amplify_flutter/amplify.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_puzzle/amplifyconfiguration.dart';
 import 'package:flutter_puzzle/config/ui.dart';
 import 'package:flutter_puzzle/utils/platform.dart';
+import 'package:flutter_puzzle/widgets/auth/splash.dart';
 import 'package:flutter_puzzle/widgets/game/page.dart';
 
 void main() {
@@ -31,8 +35,33 @@ void _setTargetPlatformForDesktop() {
   }
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  ///Configure Amplify
+  Future<void> _configureAmplify() async {
+    try {
+      // Add the following line to add Auth plugin to your app.
+      await Amplify.addPlugin(AmplifyAuthCognito());
+
+      // call Amplify.configure to use the initialized categories in your app
+      await Amplify.configure(amplifyconfig);
+    } on Exception catch (e) {
+      print('An error occurred configuring Amplify: $e');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _configureAmplify();
+  }
+
   @override
   Widget build(BuildContext context) {
     return _MyMaterialApp();
@@ -110,7 +139,7 @@ class _MyMaterialApp extends _MyPlatformApp {
               statusBarColor: Colors.transparent,
             ),
           );
-          return GamePage();
+          return const SplashScreen();
         },
       ),
     );

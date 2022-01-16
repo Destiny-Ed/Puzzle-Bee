@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-puzzlebee-dev-145018-authRole",
+      "UnauthRoleArn": "arn:aws:iam::831310632146:role/amplify-puzzlebee-dev-145018-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::831310632146:role/amplify-puzzlebee-dev-145018-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-puzzlebee-dev-145018-deployment",
+      "UnauthRoleName": "amplify-puzzlebee-dev-145018-unauthRole",
+      "StackName": "amplify-puzzlebee-dev-145018",
+      "StackId": "arn:aws:cloudformation:us-east-1:831310632146:stack/amplify-puzzlebee-dev-145018/492bff80-76d3-11ec-8752-12ab5b6dbdcf",
+      "AmplifyAppId": "d3eq6pz0euqrte"
+    },
+    "categories": {
+      "auth": {
+        "puzzlebeeb639851c": {}
+      }
+    }
+  }
+}
