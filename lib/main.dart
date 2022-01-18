@@ -46,26 +46,26 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   ///Configure Amplify
-  Future<void> _configureAmplify() async {
-    try {
-      // Add the following line to add Auth plugin to your app.
-      await Amplify.addPlugin(AmplifyAuthCognito());
+  // Future<void> _configureAmplify() async {
+  //   try {
+  //     // Add the following line to add Auth plugin to your app.
+  //     await Amplify.addPlugin(AmplifyAuthCognito());
 
-      // call Amplify.configure to use the initialized categories in your app
-      await Amplify.configure(amplifyconfig);
-    } on Exception catch (e) {
-      print('An error occurred configuring Amplify: $e');
-    }
-  }
+  //     // call Amplify.configure to use the initialized categories in your app
+  //     await Amplify.configure(amplifyconfig);
+  //   } on Exception catch (e) {
+  //     print('An error occurred configuring Amplify: $e');
+  //   }
+  // }
 
   @override
   void initState() {
     super.initState();
-    if (!kIsWeb) {
-      if (Platform.isAndroid || Platform.isIOS) {
-        _configureAmplify();
-      }
-    }
+    // if (!kIsWeb) {
+    //   if (Platform.isAndroid || Platform.isIOS) {
+    //     _configureAmplify();
+    //   }
+    // }
   }
 
   @override

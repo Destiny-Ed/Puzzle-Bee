@@ -33,21 +33,21 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text('Settings'),
-        actions: kIsWeb
-            ? []
-            : Platform.isIOS || Platform.isAndroid
-                ? [
-                    GestureDetector(
-                      onTap: () {
-                        AuthenticationProvider().logOut(context);
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Icon(Icons.exit_to_app),
-                      ),
-                    )
-                  ]
-                : [],
+        // actions: kIsWeb
+        //     ? []
+        //     : Platform.isIOS || Platform.isAndroid
+        //         ? [
+        //             GestureDetector(
+        //               onTap: () {
+        //                 AuthenticationProvider().logOut(context);
+        //               },
+        //               child: const Padding(
+        //                 padding: EdgeInsets.all(10),
+        //                 child: Icon(Icons.exit_to_app),
+        //               ),
+        //             )
+        //           ]
+        //         : [],
       ),
       body: CustomScrollView(
         slivers: [

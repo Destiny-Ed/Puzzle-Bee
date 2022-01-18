@@ -14,23 +14,24 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 2), () async {
-      if (!kIsWeb) {
-        if (Platform.isAndroid || Platform.isIOS) {
-          try {
-            final awsUser = await Amplify.Auth.getCurrentUser();
-            //send user to dashboard
-            PageRouter(context).pushPageAndRemove(GamePage());
-          } on AuthException catch (e) {
-            //send user to login
-            print(e.message);
-            PageRouter(context).pushPageAndRemove(const SignIn());
-          }
-        } else {
-          PageRouter(context).pushPageAndRemove(GamePage());
-        }
-      } else {
-        PageRouter(context).pushPageAndRemove(GamePage());
-      }
+      // if (!kIsWeb) {
+      //   if (Platform.isAndroid || Platform.isIOS) {
+      //     try {
+      //       final awsUser = await Amplify.Auth.getCurrentUser();
+      //       //send user to dashboard
+      //       PageRouter(context).pushPageAndRemove(GamePage());
+      //     } on AuthException catch (e) {
+      //       //send user to login
+      //       print(e.message);
+      //       PageRouter(context).pushPageAndRemove(const SignIn());
+      //     }
+      //   } else {
+      //     PageRouter(context).pushPageAndRemove(GamePage());
+      //   }
+      // } else {
+      //   PageRouter(context).pushPageAndRemove(GamePage());
+      // }
+      PageRouter(context).pushPageAndRemove(GamePage());
     });
     return Scaffold(
       body: Center(

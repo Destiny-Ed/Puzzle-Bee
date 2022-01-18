@@ -34,20 +34,20 @@ class _GameMaterialPageState extends State<GameMaterialPage> {
   @override
   void initState() {
     super.initState();
-    if (!kIsWeb) {
-      if (Platform.isAndroid || Platform.isIOS) {
-        Amplify.Auth.fetchUserAttributes().then((value) {
-          for (int i = 0; i < value.length; i++) {
-            final data = value[i];
-            if (data.userAttributeKey == 'name') {
-              setState(() {
-                name = "Welcome ${data.value}";
-              });
-            }
-          }
-        });
-      }
-    }
+    // if (!kIsWeb) {
+    //   if (Platform.isAndroid || Platform.isIOS) {
+    //     Amplify.Auth.fetchUserAttributes().then((value) {
+    //       for (int i = 0; i < value.length; i++) {
+    //         final data = value[i];
+    //         if (data.userAttributeKey == 'name') {
+    //           setState(() {
+    //             name = "Welcome ${data.value}";
+    //           });
+    //         }
+    //       }
+    //     });
+    //   }
+    // }
   }
 
   @override
