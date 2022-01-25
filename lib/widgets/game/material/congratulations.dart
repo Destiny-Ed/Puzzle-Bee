@@ -60,7 +60,7 @@ class GameVictoryDialog extends StatelessWidget {
         //   style: Theme.of(context).textTheme.headline5,
         // ),
         child: Image.asset(
-          'artwork/congrat.png',
+          'assets/congrat.png',
         ),
       ),
       content: Column(

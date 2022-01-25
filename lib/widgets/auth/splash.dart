@@ -35,7 +35,7 @@ class SplashScreen extends StatelessWidget {
     });
     return Scaffold(
       body: Center(
-        child: Image.asset('artwork/ic_launcher.png', width: 100),
+        child: Image.asset('assets/ic_launcher.png', width: 100),
       ),
     );
   }
