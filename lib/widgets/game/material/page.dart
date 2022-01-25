@@ -67,13 +67,16 @@ class _GameMaterialPageState extends State<GameMaterialPage> {
 
     final boardWidget = _buildBoard(context);
 
-    final mainColor = HSLColor.fromAHSL(
-            1,
-            (360 / presenter.board!.chips.length) *
-                presenter.board!.chips.last.number,
-            0.7,
-            0.5)
-        .toColor();
+    ///Check if board is null before applying app color
+    final mainColor = presenter.board == null
+        ? const HSLColor.fromAHSL(1, 4.0 * 3.0, 0.7, 0.5).toColor()
+        : HSLColor.fromAHSL(
+                1,
+                (360 / presenter.board!.chips.length) *
+                    presenter.board!.chips.last.number,
+                0.7,
+                0.5)
+            .toColor();
     return OrientationBuilder(builder: (context, orientation) {
       final statusWidget = Column(
         mainAxisSize: MainAxisSize.min,
