@@ -248,6 +248,15 @@ class GamePresenterWidgetState extends State<GamePresenterWidget>
     switch (state) {
       case AppLifecycleState.inactive:
       case AppLifecycleState.paused:
+      case AppLifecycleState.resumed:
+
+        ///Play sound when app resumes
+        Future.delayed(const Duration(seconds: 2), () {
+          if (isPlaying() == true) {
+            playSound(true);
+          }
+        });
+        break;
       case AppLifecycleState.detached:
         try {
           _saveState();
