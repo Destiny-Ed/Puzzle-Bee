@@ -11,7 +11,9 @@ import 'package:flutter_puzzle/widgets/game/board.dart';
 import 'package:share/share.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({Key? key}) : super(key: key);
+  const SettingsPage(this.appBarColor, {Key? key}) : super(key: key);
+
+  final Color appBarColor;
 
   @override
   _SettingsPageState createState() => _SettingsPageState();
@@ -32,6 +34,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
+        backgroundColor : widget.appBarColor,
         title: const Text('Settings'),
         // actions: kIsWeb
         //     ? []

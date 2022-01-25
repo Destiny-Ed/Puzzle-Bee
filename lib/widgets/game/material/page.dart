@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_puzzle/config/ui.dart';
+import 'package:flutter_puzzle/main.dart';
 import 'package:flutter_puzzle/widgets/game/board.dart';
 import 'package:flutter_puzzle/widgets/game/material/start_button.dart';
 import 'package:flutter_puzzle/widgets/game/material/moves.dart';
@@ -48,16 +49,7 @@ class _GameMaterialPageState extends State<GameMaterialPage> {
   }
 
   @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    
-  }
-
-  @override
   Widget build(BuildContext context) {
-   
-
     final presenter = GamePresenterWidget.of(context);
 
     final screenSize = MediaQuery.of(context).size;
@@ -74,6 +66,14 @@ class _GameMaterialPageState extends State<GameMaterialPage> {
     final isLargeScreen = screenWidth > 400;
 
     final boardWidget = _buildBoard(context);
+
+    final mainColor = HSLColor.fromAHSL(
+            1,
+            (360 / presenter.board!.chips.length) *
+                presenter.board!.chips.last.number,
+            0.7,
+            0.5)
+        .toColor();
     return OrientationBuilder(builder: (context, orientation) {
       final statusWidget = Column(
         mainAxisSize: MainAxisSize.min,
@@ -95,9 +95,11 @@ class _GameMaterialPageState extends State<GameMaterialPage> {
         //
         // Portrait layout
         //
+
         return Scaffold(
           appBar: AppBar(
             centerTitle: true,
+            backgroundColor: mainColor,
             title: const Text(
               'Puzzle Bee',
             ),
@@ -107,7 +109,7 @@ class _GameMaterialPageState extends State<GameMaterialPage> {
                   Navigator.push(
                           context,
                           CupertinoPageRoute(
-                              builder: (context) => const SettingsPage()))
+                              builder: (context) => SettingsPage(mainColor)))
                       .then((value) {
                     if (value != null) {
                       ///Save size to SF
@@ -154,7 +156,7 @@ class _GameMaterialPageState extends State<GameMaterialPage> {
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: _buildFab(context),
+          floatingActionButton: _buildFab(context, mainColor),
         );
       } else {
         //
@@ -169,7 +171,7 @@ class _GameMaterialPageState extends State<GameMaterialPage> {
                     Navigator.push(
                             context,
                             CupertinoPageRoute(
-                                builder: (context) => const SettingsPage()))
+                                builder: (context) => SettingsPage(mainColor)))
                         .then((value) {
                       if (value != null) {
                         ///SAVE SIZE TO SF
@@ -177,11 +179,11 @@ class _GameMaterialPageState extends State<GameMaterialPage> {
                       }
                     });
                   },
-                  child: const Padding(
-                    padding: EdgeInsets.all(15.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
                     child: CircleAvatar(
-                      backgroundColor: Colors.blue,
-                      child: Icon(
+                      backgroundColor: mainColor,
+                      child: const Icon(
                         Icons.settings,
                         color: Colors.white,
                       ),
@@ -198,7 +200,7 @@ class _GameMaterialPageState extends State<GameMaterialPage> {
                     children: <Widget>[
                       statusWidget,
                       const SizedBox(height: 48.0),
-                      _buildFab(context),
+                      _buildFab(context, mainColor),
                     ],
                   ),
                   flex: 2,
@@ -292,13 +294,14 @@ class _GameMaterialPageState extends State<GameMaterialPage> {
     );
   }
 
-  Widget _buildFab(final BuildContext context) {
+  Widget _buildFab(final BuildContext context, Color color) {
     final presenter = GamePresenterWidget.of(context);
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         FloatingActionButton.extended(
             heroTag: 'shuffle',
+            backgroundColor: color,
             onPressed: () {
               presenter.reset();
             },
@@ -309,6 +312,7 @@ class _GameMaterialPageState extends State<GameMaterialPage> {
           onTap: () {
             presenter.playStop();
           },
+          btnColor: color,
         ),
       ],
     );

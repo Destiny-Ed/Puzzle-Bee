@@ -10,10 +10,9 @@ class GamePlayStopButton extends StatefulWidget {
 
   final Function()? onTap;
 
-  GamePlayStopButton({
-    required this.isPlaying,
-    this.onTap,
-  });
+  final Color? btnColor;
+
+  GamePlayStopButton({required this.isPlaying, this.onTap, this.btnColor});
 
   @override
   _GamePlayStopButtonState createState() => _GamePlayStopButtonState();
@@ -77,7 +76,7 @@ class _GamePlayStopButtonState extends State<GamePlayStopButton>
 
     return FloatingActionButton.extended(
       heroTag: 'action',
-      backgroundColor: backgroundColor,
+      backgroundColor: widget.isPlaying ? backgroundColor : widget.btnColor,
       tooltip: widget.isPlaying ? "Stop" : "Play",
       onPressed: () => widget.onTap?.call(),
       label: Row(
