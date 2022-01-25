@@ -84,10 +84,8 @@ class GamePresenterWidgetState extends State<GamePresenterWidget>
       audioCache.loop(
         "music.mp3",
       );
-      print("Player Id playing ${audioPlayer!.playerId.toString()}");
     } else {
       audioPlayer!.stop();
-      print("Player Id Stopping ${audioPlayer!.playerId.toString()}");
     }
   }
 
@@ -248,6 +246,8 @@ class GamePresenterWidgetState extends State<GamePresenterWidget>
     switch (state) {
       case AppLifecycleState.inactive:
       case AppLifecycleState.paused:
+        playSound(false);
+        break;
       case AppLifecycleState.resumed:
 
         ///Play sound when app resumes
@@ -305,10 +305,9 @@ class GamePresenterWidgetState extends State<GamePresenterWidget>
 
   @override
   void dispose() {
-    audioPlayer!.dispose();
-
     WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
+    audioPlayer!.dispose();
   }
 }
 
