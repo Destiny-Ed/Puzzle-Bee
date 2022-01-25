@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_puzzle/data/board.dart';
@@ -49,6 +50,10 @@ class GamePresenterWidgetState extends State<GamePresenterWidget>
 
   int? time;
 
+  ///Music
+  AudioPlayer? audioPlayer;
+  late AudioCache audioCache;
+
   @override
   void initState() {
     super.initState();
@@ -59,6 +64,31 @@ class GamePresenterWidgetState extends State<GamePresenterWidget>
     time = TIME_STOPPED;
 
     _loadState();
+
+    setState(() {
+      audioPlayer = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
+      audioCache = AudioCache(fixedPlayer: audioPlayer);
+    });
+
+    Future.delayed(const Duration(seconds: 3), () {
+      if (isPlaying() == true) {
+        playSound(true);
+      }
+    });
+  }
+
+  playSound(bool isPlay) {
+    audioPlayer!.stop();
+
+    if (isPlay == true) {
+      audioCache.loop(
+        "music.mp3",
+      );
+      print("Player Id playing ${audioPlayer!.playerId.toString()}");
+    } else {
+      audioPlayer!.stop();
+      print("Player Id Stopping ${audioPlayer!.playerId.toString()}");
+    }
   }
 
   void _loadState() async {
@@ -135,6 +165,8 @@ class GamePresenterWidgetState extends State<GamePresenterWidget>
       board =
           game.shuffle(game.hardest(board!), amount: board!.size * board!.size);
     });
+
+    playSound(true);
   }
 
   void stop() {
@@ -142,6 +174,8 @@ class GamePresenterWidgetState extends State<GamePresenterWidget>
       time = TIME_STOPPED;
       steps = 0;
     });
+
+    playSound(false);
   }
 
   bool isPlaying() => time != TIME_STOPPED;
@@ -240,6 +274,8 @@ class GamePresenterWidgetState extends State<GamePresenterWidget>
     final now = DateTime.now().millisecondsSinceEpoch;
     final elapsedTime = now - time!;
 
+    audioPlayer!.pause();
+
     serializer.writeInt(elapsedTime);
     serializer.writeInt(time!);
     serializer.writeInt(steps!);
@@ -260,6 +296,8 @@ class GamePresenterWidgetState extends State<GamePresenterWidget>
 
   @override
   void dispose() {
+    audioPlayer!.dispose();
+
     WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
   }

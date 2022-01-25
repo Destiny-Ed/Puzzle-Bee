@@ -10,7 +10,7 @@ import 'package:flutter_puzzle/widgets/game/board.dart';
 import 'package:flutter_puzzle/widgets/game/material/start_button.dart';
 import 'package:flutter_puzzle/widgets/game/material/moves.dart';
 import 'package:flutter_puzzle/widgets/game/material/stopwatch.dart';
-import 'package:flutter_puzzle/widgets/game/presenter/main.dart';
+import 'package:flutter_puzzle/widgets/game/presenter/presenter.dart';
 import 'package:flutter_puzzle/widgets/game/settings.dart';
 
 class GameMaterialPage extends StatefulWidget {

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_puzzle/data/result.dart';
 import 'package:flutter_puzzle/widgets/game/material/page.dart';
 import 'package:flutter_puzzle/widgets/game/material/congratulations.dart';
-import 'package:flutter_puzzle/widgets/game/presenter/main.dart';
+import 'package:flutter_puzzle/widgets/game/presenter/presenter.dart';
 
 class GamePage extends StatelessWidget {
   @override
