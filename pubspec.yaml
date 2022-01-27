@@ -85,20 +85,23 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: ManRope
+    - family: josefin
       fonts:
-        - asset: fonts/ManRope/manrope-thin.ttf
-          weight: 100
-        - asset: fonts/ManRope/manrope-light.ttf
-          weight: 300
-        - asset: fonts/ManRope/manrope-regular.ttf
-          weight: 400
-        - asset: fonts/ManRope/manrope-medium.ttf
-          weight: 500
-        - asset: fonts/ManRope/manrope-bold.ttf
-          weight: 700
-        - asset: fonts/ManRope/manrope-extrabold.ttf
-          weight: 900
+        - asset: fonts/josefin_sans_Italic_wght.ttf
+        - asset: fonts/josefin_sans_wght.ttf
+          # style: italic
+    - family: kufam
+      fonts:
+        - asset: fonts/kufam_italic_wght.ttf
+        - asset: fonts/kufam_wght.ttf
+          # weight: 700
+    - family: ds_digi
+      fonts:
+        - asset: fonts/ds_digi.TTF
+
+    - family: digital
+      fonts:
+        - asset: fonts/digital.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:

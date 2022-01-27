@@ -34,7 +34,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor : widget.appBarColor,
+        backgroundColor: widget.appBarColor,
         title: const Text('Settings'),
         // actions: kIsWeb
         //     ? []

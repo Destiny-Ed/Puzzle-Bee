@@ -45,7 +45,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  ///Configure Amplify
+  // /Configure Amplify
   // Future<void> _configureAmplify() async {
   //   try {
   //     // Add the following line to add Auth plugin to your app.
@@ -93,9 +93,9 @@ class _MyMaterialApp extends _MyPlatformApp {
               borderRadius: BorderRadius.all(Radius.circular(16.0)),
             ),
           ),
-          textTheme: theme.textTheme.apply(fontFamily: 'ManRope'),
-          primaryTextTheme: theme.primaryTextTheme.apply(fontFamily: 'ManRope'),
-          accentTextTheme: theme.accentTextTheme.apply(fontFamily: 'ManRope'),
+          textTheme: theme.textTheme.apply(fontFamily: 'kufam'),
+          primaryTextTheme: theme.primaryTextTheme.apply(fontFamily: 'kufam'),
+          accentTextTheme: theme.accentTextTheme.apply(fontFamily: 'kufam'),
           colorScheme:
               ColorScheme.fromSwatch().copyWith(secondary: Colors.blue),
         );
