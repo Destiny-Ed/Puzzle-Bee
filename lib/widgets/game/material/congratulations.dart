@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_puzzle/data/result.dart';
 import 'package:flutter_puzzle/links.dart';
-import 'package:share/share.dart';
-
+import 'package:flutter_puzzle/utils/share_text.dart';
 import '../format.dart';
 
 class GameVictoryDialog extends StatelessWidget {
@@ -21,9 +20,11 @@ class GameVictoryDialog extends StatelessWidget {
     final actions = <Widget>[
       GestureDetector(
         onTap: () {
-          Share.share("I successfully solved the Puzzle Bee's "
+          String url = "I successfully solved the Puzzle Bee's "
               "${result.size}x${result.size} puzzle in $timeFormatted "
-              "with just ${result.steps} moves... Challenge me! $APP_URL");
+              "with just ${result.steps} moves... Challenge me! $APP_URL";
+
+          copyOderShareText(context: context, url: url);
         },
         child: Container(
           padding: const EdgeInsets.all(10),

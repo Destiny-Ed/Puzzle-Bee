@@ -37,13 +37,13 @@ dependencies:
   shared_preferences: ^2.0.11
   encrypt: ^5.0.1
   color: ^3.0.0
-  share: ^2.0.4
   url_launcher: ^6.0.17
   fluttertoast: ^8.0.8
   amplify_auth_cognito: ^0.2.10
   amplify_flutter: ^0.2.10
   provider: ^6.0.2
   audioplayers: ^0.20.1
+  share_plus: ^3.0.4
 
 
 dev_dependencies:

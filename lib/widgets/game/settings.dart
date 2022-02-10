@@ -7,8 +7,8 @@ import 'package:flutter_puzzle/config/ui.dart';
 import 'package:flutter_puzzle/data/board.dart';
 import 'package:flutter_puzzle/links.dart';
 import 'package:flutter_puzzle/provider/auth_provider.dart';
+import 'package:flutter_puzzle/utils/share_text.dart';
 import 'package:flutter_puzzle/widgets/game/board.dart';
-import 'package:share/share.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage(this.appBarColor, {Key? key}) : super(key: key);
@@ -90,8 +90,10 @@ class _SettingsPageState extends State<SettingsPage> {
                     title: const Text('Share App'),
                     subtitle: const Text('Play Puzzle Bee with friends'),
                     onTap: () {
-                      Share.share(
-                          "Hey, This is how I challenge and keep my mind active $APP_URL");
+                      String url =
+                          "Hey, This is how I challenge and keep my mind active $APP_URL";
+
+                      copyOderShareText(context: context, url: url);
                     },
                   ),
 

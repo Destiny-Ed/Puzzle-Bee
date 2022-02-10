@@ -1,9 +1,13 @@
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_puzzle/config/ui.dart';
+import 'package:flutter_puzzle/links.dart';
 import 'package:flutter_puzzle/main.dart';
+import 'package:flutter_puzzle/utils/url.dart';
 import 'package:flutter_puzzle/widgets/game/board.dart';
 import 'package:flutter_puzzle/widgets/game/material/start_button.dart';
 import 'package:flutter_puzzle/widgets/game/material/moves.dart';
@@ -94,6 +98,21 @@ class _GameMaterialPageState extends State<GameMaterialPage> {
         ],
       );
 
+      final actionButton = GestureDetector(
+        onTap: () {
+          launchUrl(url: APP_URL);
+        },
+        child: Container(
+          padding: const EdgeInsets.all(10.0),
+          child: Row(
+            children: [
+              Image.asset('assets/playstore.png', width: 45),
+              const Text('Download App')
+            ],
+          ),
+        ),
+      );
+
       if (orientation == Orientation.portrait) {
         //
         // Portrait layout
@@ -103,31 +122,36 @@ class _GameMaterialPageState extends State<GameMaterialPage> {
           appBar: AppBar(
             centerTitle: true,
             backgroundColor: mainColor,
+            leading: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                            builder: (context) => SettingsPage(mainColor)))
+                    .then((value) {
+                  if (value != null) {
+                    ///Save size to SF
+                    presenter.resize(value);
+                  }
+                });
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Icon(
+                  Icons.settings,
+                  semanticLabel: "Settings",
+                ),
+              ),
+            ),
             title: const Text(
               'Puzzle Bee',
             ),
             actions: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => SettingsPage(mainColor)))
-                      .then((value) {
-                    if (value != null) {
-                      ///Save size to SF
-                      presenter.resize(value);
-                    }
-                  });
-                },
-                child: const Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Icon(
-                    Icons.settings,
-                    semanticLabel: "Settings",
-                  ),
-                ),
-              ),
+              kIsWeb
+                  ? actionButton
+                  : !Platform.isAndroid || !Platform.isIOS
+                      ? actionButton
+                      : const Text(''),
             ],
           ),
           body: SafeArea(
@@ -162,10 +186,38 @@ class _GameMaterialPageState extends State<GameMaterialPage> {
           floatingActionButton: _buildFab(context, mainColor),
         );
       } else {
+        AppBar appBar = AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          actions: [
+            GestureDetector(
+              onTap: () {
+                launchUrl(url: APP_URL);
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    color: mainColor, borderRadius: BorderRadius.circular(10)),
+                padding: const EdgeInsets.all(10.0),
+                margin: const EdgeInsets.all(10.0),
+                child: Row(
+                  children: [
+                    Image.asset('assets/playstore.png', width: 45),
+                    const Text('Download App')
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
         //
         // Landscape layout
         //
         return Scaffold(
+          appBar: kIsWeb
+              ? appBar
+              : !Platform.isAndroid || !Platform.isIOS
+                  ? appBar
+                  : null,
           body: SafeArea(
             child: Row(
               children: <Widget>[
