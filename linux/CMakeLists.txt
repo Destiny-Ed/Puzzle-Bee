@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 project(runner LANGUAGES CXX)
 
 set(BINARY_NAME "puzzle_bee")
-set(APPLICATION_ID "app.puzzle_bee")
+set(APPLICATION_ID "app.puzzle_bee_hack")
 
 cmake_policy(SET CMP0063 NEW)
 

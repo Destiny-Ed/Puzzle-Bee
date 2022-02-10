@@ -149,7 +149,7 @@ class _GameMaterialPageState extends State<GameMaterialPage> {
             actions: [
               kIsWeb
                   ? actionButton
-                  : !Platform.isAndroid || !Platform.isIOS
+                  : !Platform.isAndroid && !Platform.isIOS
                       ? actionButton
                       : const Text(''),
             ],
@@ -215,7 +215,7 @@ class _GameMaterialPageState extends State<GameMaterialPage> {
         return Scaffold(
           appBar: kIsWeb
               ? appBar
-              : !Platform.isAndroid || !Platform.isIOS
+              : !Platform.isAndroid && !Platform.isIOS
                   ? appBar
                   : null,
           body: SafeArea(

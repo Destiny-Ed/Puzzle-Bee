@@ -1,4 +1,4 @@
-// package app.puzzle_bee
+// package app.puzzle_bee_hack
 
 // import com.example.gpg.PlayGamesPlugin
 // import io.flutter.plugin.common.PluginRegistry

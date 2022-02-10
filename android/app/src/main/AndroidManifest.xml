@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="app.puzzle_bee">
+    package="app.puzzle_bee_hack">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
